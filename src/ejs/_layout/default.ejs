@@ -1,0 +1,18 @@
+<%- include /_setting/variable %>
+<!DOCTYPE html>
+<html lang="ja-JP">
+<head>
+    <%- include /_partial/meta %>
+    <%- headCustom() %>
+</head>
+<body>
+    <%- include /_partial/header %>
+    <main class="l-main">
+        <article class="l-main_inner">
+            <%- content() %>
+        </article>
+    </main>
+    <%- include /_partial/footer %>
+    <%- footCustom() %>
+</body>
+</html>

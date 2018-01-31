@@ -1,0 +1,13 @@
+include /_setting/variable
+doctype html
+html(lang='ja-JP')
+  head
+    include /_partial/meta
+    block head_custom
+  body
+    include /_partial/header
+    main.l-main
+      article.l-main_inner
+        block content
+    include /_partial/footer
+    block foot_custom

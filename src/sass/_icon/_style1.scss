@@ -1,0 +1,37 @@
+@font-face {
+  font-family: "style1";
+  src: resolve("resources/font/style1.woff2?c=1653462863") format("woff2"),
+       resolve("resources/font/style1.woff?c=1653462863") format("woff"),
+       resolve("resources/font/style1.ttf?c=1653462863") format("truetype");
+}
+%icon-style1::before {
+  font-family: "style1";
+}
+%icon-style1-arrowDown {
+  content: "\F001";
+}
+.c-icon.-style1-arrowDown::before {
+  @extend %icon-style1;
+  @extend %icon-style1-arrowDown;
+}
+%icon-style1-arrowLeft {
+  content: "\F002";
+}
+.c-icon.-style1-arrowLeft::before {
+  @extend %icon-style1;
+  @extend %icon-style1-arrowLeft;
+}
+%icon-style1-arrowRight {
+  content: "\F003";
+}
+.c-icon.-style1-arrowRight::before {
+  @extend %icon-style1;
+  @extend %icon-style1-arrowRight;
+}
+%icon-style1-arrowUp {
+  content: "\F004";
+}
+.c-icon.-style1-arrowUp::before {
+  @extend %icon-style1;
+  @extend %icon-style1-arrowUp;
+}

@@ -1,0 +1,13 @@
+@import "../_webfont/base";
+@import "../_webfont/font/style1";
+@import "../_sprite/base";
+@import "../_sprite/common/resource/img/style1";
+@import "../_sprite/img/style2";
+
+.inlineImageTest1::before {
+  content: "";
+  display: inline-block;
+  background: inline('common/resource/img/c-brand__logo.svg') no-repeat 0 0;
+  width: width('common/resource/img/c-brand__logo.svg');
+  height: height('common/resource/img/c-brand__logo.svg');
+}

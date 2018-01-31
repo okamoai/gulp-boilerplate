@@ -1,0 +1,5 @@
+.l-main_inner {
+  width: var(--pageWidth);
+  margin: 30px auto;
+  line-height: 1.4;
+}

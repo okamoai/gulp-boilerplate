@@ -1,0 +1,13 @@
+<% data = JSON.parse(include('/_data/site.json')) %>
+<% function headCustom() { %>
+    <link rel="stylesheet" href="<%= cdnRoot %>resources/css/all.css">
+<% } %>
+<% function footCustom() { %>
+    <script src="<%= cdnRoot %>resources/js/entry.js"></script>
+<% } %>
+<% function content() { %>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ultricies id eros ut hendrerit. Nam hendrerit neque nulla. Nullam auctor mattis ex fermentum rhoncus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nullam vulputate odio leo, eu hendrerit enim pellentesque id. Suspendisse non porttitor mauris. Phasellus at mauris quis nulla egestas malesuada egestas ac quam. Vivamus a lobortis urna, in ultricies magna. Donec cursus libero a pretium varius. Curabitur a augue at nisl malesuada accumsan et nec massa. Ut viverra, sapien sed aliquet hendrerit, dui felis consequat est, a commodo elit orci elementum libero. Cras aliquet est a urna bibendum, eu posuere ante luctus. Proin in libero diam.</p>
+    <p>CSS Sprite Test:<span class="c-sprite -style1-arrowDown"></span><span class="c-sprite -style1-arrowUp"></span><span class="c-sprite -style1-arrowLeft"></span><span class="c-sprite -style1-arrowRight"></span></p>
+    <p>Web Font Test:<span class="c-icon -style1-arrowDown"></span><span class="c-icon -style1-arrowUp"></span><span class="c-icon -style1-arrowLeft"></span><span class="c-icon -style1-arrowRight"></span></p>
+<% } %>
+<%- include /_layout/default %>

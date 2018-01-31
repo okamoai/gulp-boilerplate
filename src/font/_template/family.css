@@ -1,0 +1,21 @@
+@font-face {
+  font-family: '<%= fontName %>';
+  src: resolve('<%= fontPath %>/<%= fontName %>.woff2?c=<%= hash %>') format('woff2'),
+       resolve('<%= fontPath %>/<%= fontName %>.woff?c=<%= hash %>') format('woff'),
+       resolve('<%= fontPath %>/<%= fontName %>.ttf?c=<%= hash %>') format('truetype');
+}
+:root {
+  --<%= className %>-<%= fontName %> {
+    font-family: '<%= fontName %>';
+  }
+}
+<% _.each(glyphs, function(glyph) { %>
+:root {
+  --<%= className %>-<%= fontName %>-<%= glyph.name %> {
+    content: "\<%= glyph.codepoint.toString(16).toUpperCase() %>";
+  }
+}
+.c-<%= className %>.-<%= fontName %>-<%= glyph.name %>::before {
+  @apply --<%= className %>-<%= fontName %>;
+  @apply --<%= className %>-<%= fontName %>-<%= glyph.name %>;
+}<% }); %>

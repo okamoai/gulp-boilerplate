@@ -1,0 +1,23 @@
+%<%= className %>-<%= spriteName %> {
+  background-image: resolve('<%= spritePath %>/<%= data.spritesheet.image %>?c=<%= hash %>');
+  <% if (retina) { %>
+    @at-root {
+      @media (-webkit-min-device-pixel-ratio: 2),
+        (min-resolution: 192dpi) {
+        background-image: resolve('<%= spritePath %>/<%= data.retina_spritesheet.image %>?c=<%= hash %>');
+        background-size: <%= data.spritesheet.width %>px <%= data.spritesheet.height %>px;
+      }
+    }
+  <% } %>
+}
+<% _.each(data.sprites, function(sprite) { %>
+  %<%= className %>-<%= spriteName %>-<%= sprite.name %> {
+    background-position: <%= sprite.offset_x %>px <%= sprite.offset_y %>px;
+    width: <%= sprite.width %>px;
+    height: <%= sprite.height %>px;
+  }
+  .c-<%= className %>.-<%= spriteName %>-<%= sprite.name %> {
+    @extend %<%= className %>-<%= spriteName %>;
+    @extend %<%= className %>-<%= spriteName %>-<%= sprite.name %>;
+  }
+<% }); %>

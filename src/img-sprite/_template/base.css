@@ -1,0 +1,13 @@
+:root {
+  --<%= className %> {
+    content: '';
+    display: inline-block;
+    line-height: 1;
+    speak: none;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+  }
+}
+.c-<%= className %> {
+  @apply --<%= className %>;
+}

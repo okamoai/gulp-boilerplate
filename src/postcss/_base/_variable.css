@@ -1,0 +1,13 @@
+/* 変数を設定するファイル */
+
+:root {
+  /* width */
+  --pageWidth: 960px;
+  /* color */
+  /* 文字色：標準 */
+  --textColor: #000;
+  --linkColor: #ff3e62;
+  --visitedColor: #01588c;
+  --hoverColor: #01588c;
+}
+

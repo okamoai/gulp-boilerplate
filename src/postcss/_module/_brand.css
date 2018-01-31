@@ -1,0 +1,6 @@
+.c-brand_logo {
+  & img {
+    width: 58px;
+    height: auto;
+  }
+}

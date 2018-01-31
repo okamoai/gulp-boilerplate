@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <title><%= spriteName %></title>
+    <link href="<%= spriteName %>.css" rel="stylesheet">
+    <style>
+      body { font-family: Gill Sans; text-align: center; background: #f7f7f7 }
+      body > h1 { color: #666; margin: 1em 0 }
+      .sprite { padding: 0 }
+      .sprite > li { display: inline-block; margin: .3em .2em; padding: 10px 2px; width: 5em; background: #fff; border-radius: .5em; position: relative; text-align: center }
+      .sprite > li span:first-child { margin-bottom: 10px; font-size: 4em; text-align: center }
+      .sprite-name { font-size: .8em; color: #999; display: block }
+    </style>
+  </head>
+  <body>
+    <h1><%= spriteName %></h1>
+    <ul class="sprite"><% _.each(data.sprites, function(sprite) { %>
+      <li>
+        <span class="<%= className %>_<%= spriteName %> <%= className %>_<%= spriteName %>--<%= sprite.name %>"></span>
+        <span class="sprite-name"><%= sprite.name %></span>
+      </li><% }); %>
+    </ul>
+  </body>
+</html>

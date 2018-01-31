@@ -1,0 +1,9 @@
+.l-header {
+  background-color: #ccc;
+}
+.l-header_inner {
+  width: var(--pageWidth);
+  margin: auto;
+  padding: 18px 5px;
+}
+

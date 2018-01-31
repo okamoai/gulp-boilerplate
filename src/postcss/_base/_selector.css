@@ -1,0 +1,59 @@
+/* セレクター初期設定用ファイル */
+body {
+  position: relative;
+  font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "ＭＳ Ｐゴシック", Helvetica, Arial, sans-serif;
+  word-break: break-all;
+  -webkit-text-size-adjust: 100%;
+}
+html {
+  overflow-y: scroll;
+}
+a {
+  &:link {
+    color: var(--linkColor);
+  }
+  &:visited {
+    color: var(--visitedColor);
+  }
+  &:hover {
+    color:  var(--hoverColor);
+  }
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote::before,
+blockquote::after,
+q::before,
+q::after {
+  content: '';
+  content: none;
+}
+input,
+textarea {
+  margin: 0;
+  padding: 0;
+}
+input,
+select {
+  vertical-align: middle;
+}
+ol,
+ul {
+  list-style: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+caption,
+th {
+  text-align: left;
+}
+header {
+  display: block;
+}
+img {
+  vertical-align: bottom;
+}

@@ -1,0 +1,9 @@
+.l-header {
+  background-color: #ccc;
+  &_inner {
+    width: $PAGE_WIDTH;
+    margin: auto;
+    padding: 18px 5px;
+  }
+}
+

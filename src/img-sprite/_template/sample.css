@@ -1,0 +1,25 @@
+.<%= className %>_<%= spriteName %> {
+  display: inline-block;
+  line-height: 1;
+  speak: none;
+  vertical-align: middle;
+  background-repeat: no-repeat;
+  background-image: url("<%= data.spritesheet.image %>?c=<%= hash %>");
+}
+<% _.each(data.sprites, function(sprite) { %>
+.<%= className %>_<%= spriteName %>--<%= sprite.name %> {
+  background-position: <%= sprite.offset_x %>px <%= sprite.offset_y %>px;
+  width: <%= sprite.width %>px;
+  height: <%= sprite.height %>px;
+}
+<% }); %>
+
+<% if (retina) { %>
+@media (-webkit-min-device-pixel-ratio: 2),
+       (min-resolution: 192dpi) {
+  .<%= className %>_<%= spriteName %> {
+    background-image: url("<%= data.retina_spritesheet.image %>?c=<%= hash %>");
+    background-size: <%= data.spritesheet.width %>px <%= data.spritesheet.height %>px;
+  }
+}
+<% } %>

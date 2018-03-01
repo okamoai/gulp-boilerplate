@@ -42,16 +42,19 @@ gulp.task('postcss', () => {
     }))
   }
   const gulpSrc = path.join(config.tasks.postcss.path.source, config.tasks.postcss.target)
-  return gulp.src(gulpSrc, { base: config.tasks.postcss.path.source })
-    .pipe(gulpIf(config.env === 'development', sourcemaps.init()))
-    .pipe(plumber({
-      errorHandler: notify.onError('<%= error.message %>'),
-    }))
-    // Skip outputting directories and files with underscores
-    .pipe(filter(file => !/[/\\]_/.test(file.path) || !/_/.test(file.relative)))
-    .pipe(postcss(processors))
-    .pipe(rename({ extname: '.css' }))
-    .pipe(gulpIf(config.env === 'development', sourcemaps.write()))
-    .pipe(gulp.dest(config.tasks.postcss.path.build))
-    .pipe(debug({ title: 'postcss:file' }))
+  return (
+    gulp
+      .src(gulpSrc, { base: config.tasks.postcss.path.source })
+      .pipe(gulpIf(config.env === 'development', sourcemaps.init()))
+      .pipe(plumber({
+        errorHandler: notify.onError('<%= error.message %>'),
+      }))
+      // Skip outputting directories and files with underscores
+      .pipe(filter(file => !/[/\\]_/.test(file.path) || !/_/.test(file.relative)))
+      .pipe(postcss(processors))
+      .pipe(rename({ extname: '.css' }))
+      .pipe(gulpIf(config.env === 'development', sourcemaps.write()))
+      .pipe(gulp.dest(config.tasks.postcss.path.build))
+      .pipe(debug({ title: 'postcss:file' }))
+  )
 })

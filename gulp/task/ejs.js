@@ -15,25 +15,30 @@ import debug from 'gulp-debug'
 import config from '../config'
 
 gulp.task('ejs', callback => {
-  gulp.src(path.join(config.tasks.ejs.path.source, config.tasks.ejs.target))
+  gulp
+    .src(path.join(config.tasks.ejs.path.source, config.tasks.ejs.target))
     .on('end', callback)
     .pipe(plumber({
       errorHandler: notify.onError('<%= error.message %>'),
     }))
     // Skip outputting directories and files with underscores
     .pipe(filter(file => !/[/\\]_/.test(file.path) || !/^_/.test(file.relative)))
-    .pipe(ejs({
-      env: {
-        mode: config.env,
-        domain: config.domain,
-        cdn: config.cdn,
-        path: config.path,
+    .pipe(ejs(
+      {
+        env: {
+          mode: config.env,
+          domain: config.domain,
+          cdn: config.cdn,
+          path: config.path,
+        },
       },
-    }, {
-      root: config.tasks.ejs.path.source,
-    }, {
-      ext: '.html',
-    }))
+      {
+        root: config.tasks.ejs.path.source,
+      },
+      {
+        ext: '.html',
+      }
+    ))
     // Rename if file name has extension specification
     .pipe(rename(filePath => {
       const replacePath = filePath

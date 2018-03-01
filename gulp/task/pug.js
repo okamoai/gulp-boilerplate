@@ -15,7 +15,8 @@ import debug from 'gulp-debug'
 import config from '../config'
 
 gulp.task('pug', callback => {
-  gulp.src(path.join(config.tasks.pug.path.source, config.tasks.pug.target))
+  gulp
+    .src(path.join(config.tasks.pug.path.source, config.tasks.pug.target))
     .on('end', callback)
     .pipe(plumber({
       errorHandler: notify.onError('<%= error.message %>'),
@@ -26,13 +27,18 @@ gulp.task('pug', callback => {
     .pipe(data(file => {
       const json = {}
       const pugData = {}
-      String(file.contents).split('\n').forEach(line => {
-        if (line.match(/^\/\/-\s*?data\s+?(.+?)$/)) {
-          const dataFileName = RegExp.$1
-          const dataFile = fs.readFileSync(path.join(process.cwd(), config.tasks.pug.path.source, dataFileName), 'utf8')
-          Object.assign(json, JSON.parse(dataFile))
-        }
-      })
+      String(file.contents)
+        .split('\n')
+        .forEach(line => {
+          if (line.match(/^\/\/-\s*?data\s+?(.+?)$/)) {
+            const dataFileName = RegExp.$1
+            const dataFile = fs.readFileSync(
+              path.join(process.cwd(), config.tasks.pug.path.source, dataFileName),
+              'utf8'
+            )
+            Object.assign(json, JSON.parse(dataFile))
+          }
+        })
       pugData[config.tasks.pug.dataName] = json
       pugData.env = {
         mode: config.env,

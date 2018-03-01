@@ -12,7 +12,8 @@ import debug from 'gulp-debug'
 import config from '../config'
 
 gulp.task('imagemin', callback => {
-  gulp.src(path.join(config.tasks.imagemin.path.source, config.tasks.imagemin.target))
+  gulp
+    .src(path.join(config.tasks.imagemin.path.source, config.tasks.imagemin.target))
     .on('end', callback)
     .pipe(plumber({
       errorHandler: notify.onError('<%= error.message %>'),

@@ -37,10 +37,10 @@ gulp.task('sass', callback => {
       zindex: false,
     }))
   }
-  gulp.src(
-    path.join(config.tasks.sass.path.source, config.tasks.sass.target),
-    { base: config.tasks.sass.path.source }
-  )
+  gulp
+    .src(path.join(config.tasks.sass.path.source, config.tasks.sass.target), {
+      base: config.tasks.sass.path.source,
+    })
     .on('end', callback)
     .pipe(plumber({
       errorHandler: notify.onError('<%= error.message %>'),

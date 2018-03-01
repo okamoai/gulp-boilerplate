@@ -50,7 +50,8 @@ gulp.task('font', callback => {
     }
   })
   // Generate Based CSS Extends
-  gulp.src(config.tasks.font.template[config.defaultTasks.css].base)
+  gulp
+    .src(config.tasks.font.template[config.defaultTasks.css].base)
     .on('end', () => onEnd('base'))
     .pipe(consolidate('lodash', { className: config.tasks.font.className }))
     .pipe(rename({
@@ -64,29 +65,36 @@ gulp.task('font', callback => {
   Object.keys(fonts).forEach(key => {
     const fontName = fonts[key].name
     const fontFiles = fonts[key].items
-    const fontPath = fonts[key].path.split(path.sep).filter((dir, idx) => {
-      const sourceDirs = config.tasks.font.path.source.split(path.sep)
-      return dir !== sourceDirs[idx]
-    }).join(path.sep)
-    gulp.src(fontFiles, { base: config.tasks.font.path.source })
+    const fontPath = fonts[key].path
+      .split(path.sep)
+      .filter((dir, idx) => {
+        const sourceDirs = config.tasks.font.path.source.split(path.sep)
+        return dir !== sourceDirs[idx]
+      })
+      .join(path.sep)
+    gulp
+      .src(fontFiles, { base: config.tasks.font.path.source })
       .on('end', () => onEnd(`font:${key}`))
-      .pipe(gulpIf(config.env === 'development', imagemin([
-        imagemin.svgo({
-          plugins: [
-            { removeRasterImages: true },
-            { cleanupListOfValues: true },
-            { sortAttrs: true },
-            { removeUselessStrokeAndFill: true },
-            { convertPathData: false },
-            { removeTitle: true },
-            { removeDesc: true },
-          ],
-        }),
-      ])))
+      .pipe(gulpIf(
+        config.env === 'development',
+        imagemin([
+          imagemin.svgo({
+            plugins: [
+              { removeRasterImages: true },
+              { cleanupListOfValues: true },
+              { sortAttrs: true },
+              { removeUselessStrokeAndFill: true },
+              { convertPathData: false },
+              { removeTitle: true },
+              { removeDesc: true },
+            ],
+          }),
+        ])
+      ))
       .pipe(iconfont({
         fontName,
         prependUnicode: true,
-        startUnicode: 0xF000,
+        startUnicode: 0xf000,
         formats: ['woff2', 'woff', 'ttf'],
         normalize: true,
         fontHeight: 1000,
@@ -115,7 +123,8 @@ gulp.task('font', callback => {
           .split(path.sep)
           .filter(dir => dir !== fontName)
           .join(path.sep)
-        gulp.src(config.tasks.font.template[config.defaultTasks.css].font)
+        gulp
+          .src(config.tasks.font.template[config.defaultTasks.css].font)
           .on('end', () => onEnd(`css:${key}`))
           .pipe(consolidate('lodash', consolidateOption))
           .pipe(rename({
@@ -127,13 +136,15 @@ gulp.task('font', callback => {
         // Generate sample files
         if (config.env === 'development') {
           // CSS
-          gulp.src(config.tasks.font.template.sample.css)
+          gulp
+            .src(config.tasks.font.template.sample.css)
             .pipe(consolidate('lodash', consolidateOption))
             .pipe(rename({ basename: fontName }))
             .pipe(gulp.dest(path.join(config.tasks.font.path.sample, fontPath)))
             .pipe(debug({ title: 'font:sampleCSS' }))
-            // HTML
-          gulp.src(config.tasks.font.template.sample.html)
+          // HTML
+          gulp
+            .src(config.tasks.font.template.sample.html)
             .pipe(consolidate('lodash', consolidateOption))
             .pipe(rename({ basename: fontName }))
             .pipe(gulp.dest(path.join(config.tasks.font.path.sample, fontPath)))

@@ -54,12 +54,15 @@ gulp.task('jsConcat', callback => {
     const concatFiles = concatObject[outputFile]
     const outputFileName = path.basename(outputFile)
     const outputDirs = path.dirname(outputFile).split(path.sep)
-    const outputDir = outputDirs.filter((dir, idx) => {
-      const sourceDirs = config.tasks.jsConcat.path.source.split(path.sep)
-      return dir !== sourceDirs[idx]
-    }).join(path.sep)
+    const outputDir = outputDirs
+      .filter((dir, idx) => {
+        const sourceDirs = config.tasks.jsConcat.path.source.split(path.sep)
+        return dir !== sourceDirs[idx]
+      })
+      .join(path.sep)
 
-    gulp.src(concatFiles, { base: config.tasks.jsConcat.path.source })
+    gulp
+      .src(concatFiles, { base: config.tasks.jsConcat.path.source })
       .pipe(gulpIf(config.env === 'development', sourcemaps.init()))
       .pipe(plumber({
         errorHandler: notify.onError('<%= error.message %>'),
@@ -73,4 +76,3 @@ gulp.task('jsConcat', callback => {
       .pipe(debug({ title: 'jsConcat:file' }))
   }, concatObject)
 })
-

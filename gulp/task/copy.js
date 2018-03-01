@@ -12,13 +12,15 @@ import replacestream from 'replacestream'
 import config from '../config'
 
 gulp.task('copy', callback => {
-  gulp.src(path.join(config.tasks.copy.path.source, config.tasks.copy.target))
+  gulp
+    .src(path.join(config.tasks.copy.path.source, config.tasks.copy.target))
     .on('end', callback)
     // While watching, change the timestamp and narrow down the copy target
     .pipe(gulpIf(config.isWatching, changed(config.tasks.copy.path.build)))
     // Replace the character string set in config.js
     .pipe(through.obj(function Tansform(file, encoding, throughCallback) {
-      const isTarget = config.tasks.copy.replace.target.some(ext => file.path.match(new RegExp(`${ext}$`)))
+      const isTarget = config.tasks.copy.replace.target.some(ext =>
+        file.path.match(new RegExp(`${ext}$`)))
       const replace = file
       if (!file.isNull() && isTarget) {
         config.tasks.copy.replace.regex.forEach(regex => {

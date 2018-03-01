@@ -16,13 +16,12 @@ const deleteTarget = [
 ]
 
 gulp.task('clean', callback => {
-  del(deleteTarget)
-    .then(paths => {
-      process.stdout.write('Deleted files and Directories:\n')
-      paths.forEach(filePath => {
-        const fileProjectPath = filePath.replace(process.cwd() + path.sep, '')
-        process.stdout.write(`- ${chalk.blue(fileProjectPath)}\n`)
-      })
-      callback()
+  del(deleteTarget).then(paths => {
+    process.stdout.write('Deleted files and Directories:\n')
+    paths.forEach(filePath => {
+      const fileProjectPath = filePath.replace(process.cwd() + path.sep, '')
+      process.stdout.write(`- ${chalk.blue(fileProjectPath)}\n`)
     })
+    callback()
+  })
 })

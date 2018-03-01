@@ -10,10 +10,11 @@ import eslint from 'gulp-eslint'
 import config from '../config'
 
 gulp.task('eslint', () => {
-  gulp.src(path.join(
-    config.tasks[config.defaultTasks.js].path.source,
-    config.tasks[config.defaultTasks.js].target,
-  ))
+  gulp
+    .src(path.join(
+      config.tasks[config.defaultTasks.js].path.source,
+      config.tasks[config.defaultTasks.js].target
+    ))
     .pipe(plumber({
       errorHandler: notify.onError('<%= error.message %>'),
     }))

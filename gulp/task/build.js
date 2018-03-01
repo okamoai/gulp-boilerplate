@@ -19,6 +19,6 @@ gulp.task('build', callback => {
     config.defaultTasks.js,
     config.defaultTasks.html,
     config.defaultTasks.css,
-    callback,
+    callback
   )
 })

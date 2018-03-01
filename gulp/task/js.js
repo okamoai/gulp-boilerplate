@@ -34,10 +34,13 @@ gulp.task('js', callback => {
     taskExecuted[filePath] = false
     const normalizeFilePath = path.normalize(filePath)
     const file = path.parse(normalizeFilePath)
-    const entry = normalizeFilePath.split(path.sep).filter((dir, idx) => {
-      const sourceDirs = config.tasks.js.path.source.split(path.sep)
-      return dir !== sourceDirs[idx]
-    }).join(path.sep)
+    const entry = normalizeFilePath
+      .split(path.sep)
+      .filter((dir, idx) => {
+        const sourceDirs = config.tasks.js.path.source.split(path.sep)
+        return dir !== sourceDirs[idx]
+      })
+      .join(path.sep)
 
     const browserifyObject = browserify({
       basedir: config.tasks.js.path.source,

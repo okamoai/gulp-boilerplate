@@ -140,6 +140,22 @@ npm run postcss:prd  # 本番環境用
 - `stg`, `prd` オプションで CSS が圧縮されて出力されます。（[cssnano](https://github.com/ben-eb/cssnano) を使用）
 - `stg`, `prd` オプションで `url()` リソースの参照にキャッシュ無効化（Cachebuster）処理が行われます。
 
+#### タスク: `sass`
+```sh
+npm run sass:dev  # 開発環境用
+npm run sass:stg  # テスト環境用
+npm run sass:prd  # 本番環境用
+```
+[Sass](https://sass-lang.com/) から CSS へ出力します。
+
+- `_`（アンダースコア）から始まるディレクトリやファイルは CSS 出力の対象外になります。（include 参照のみのファイルに使用）
+- Sass のコンパイル後に [postcss-assets](https://github.com/assetsjs/postcss-assets), [css-mqpacker](https://github.com/hail2u/node-css-mqpacker),  [autoprefixer](https://github.com/postcss/autoprefixer) を適用します。
+
+環境オプションで上記共通処理以外に以下の挙動の変化があります。
+
+- `stg`, `prd` オプションで CSS が圧縮されて出力されます。（[cssnano](https://github.com/ben-eb/cssnano) を使用）
+- `stg`, `prd` オプションで `url()` リソースの参照にキャッシュ無効化（Cachebuster）処理が行われます。
+
 #### タスク: `js`
 ```sh
 npm run js:dev  # 開発環境用

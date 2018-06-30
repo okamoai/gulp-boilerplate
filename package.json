@@ -57,7 +57,11 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.js": ["prettier-eslint --write", "eslint", "git add"]
+    "*.js": [
+      "prettier-eslint --write",
+      "eslint",
+      "git add"
+    ]
   },
   "author": "okamoai <okamoai@rano-raraku.net>",
   "license": "MIT",
@@ -65,16 +69,26 @@
     "node": "~8.9.4",
     "npm": "~4.0.5"
   },
+  "browserslist": [
+    "ie 11",
+    "last 1 Edge versions",
+    "last 1 Firefox versions",
+    "last 1 Chrome versions",
+    "last 1 Safari versions",
+    "last 2 iOS versions",
+    "Android >= 4.4",
+    "last 1 ChromeAndroid versions"
+  ],
   "browser": {
     "jquery": "./node_modules/jquery/dist/jquery.js"
   },
   "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.51",
+    "@babel/core": "^7.0.0-beta.51",
+    "@babel/preset-env": "^7.0.0-beta.51",
+    "@babel/register": "^7.0.0-beta.51",
     "autoprefixer": "^7.2.5",
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.0",
-    "babel-preset-stage-2": "^6.24.1",
-    "babel-preset-stage-3": "^6.24.1",
-    "babelify": "^8.0.0",
+    "babelify": "^9.0.0",
     "browser-sync": "^2.23.6",
     "browserify": "^15.2.0",
     "chalk": "^2.0.1",

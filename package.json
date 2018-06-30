@@ -1,6 +1,6 @@
 {
   "name": "gulp-boilerplate",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "description": "Static web page boilerplate with gulp.js",
   "main": "gulpfile.babel.js",
   "scripts": {

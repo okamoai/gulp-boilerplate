@@ -2,23 +2,26 @@
  * Gulp Task: build
  * Clear and build all the data
  */
-import gulp from 'gulp'
-import runSequence from 'run-sequence'
+import Registry from 'undertaker-registry'
 import config from '../config'
 
-runSequence.use(gulp)
+class Build extends Registry {
+  init(gulp) {
+    gulp.task(
+      'build',
+      gulp.series(
+        'clean',
+        'copy',
+        config.defaultTasks.font,
+        config.defaultTasks.sprite,
+        config.defaultTasks.image,
+        'eslint',
+        config.defaultTasks.js,
+        config.defaultTasks.html,
+        config.defaultTasks.css
+      )
+    )
+  }
+}
 
-gulp.task('build', callback => {
-  runSequence(
-    'clean',
-    'copy',
-    config.defaultTasks.font,
-    config.defaultTasks.sprite,
-    config.defaultTasks.image,
-    'eslint',
-    config.defaultTasks.js,
-    config.defaultTasks.html,
-    config.defaultTasks.css,
-    callback
-  )
-})
+export default new Build()

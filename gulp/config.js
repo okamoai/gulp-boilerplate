@@ -13,19 +13,6 @@ const dir = {
   template: 'src/template',
 }
 
-const autoprefixer = {
-  browsers: [
-    'ie 11',
-    'last 1 Edge versions',
-    'last 1 Firefox versions',
-    'last 1 Chrome versions',
-    'last 1 Safari versions',
-    'last 2 iOS versions',
-    'Android >= 4.4',
-    'last 1 ChromeAndroid versions',
-  ],
-}
-
 /* ========== Tasks ========== */
 // Task Setting
 const tasks = {}
@@ -96,7 +83,6 @@ tasks.sass = {
   target: '**/*.scss',
   srcDir: 'sass',
   genDir: 'resources/css',
-  autoprefixer,
 }
 tasks.sass.path = {
   source: path.join(dir.source, tasks.sass.srcDir),
@@ -108,7 +94,6 @@ tasks.postcss = {
   target: '**/*.css',
   srcDir: 'postcss',
   genDir: 'resources/css',
-  autoprefixer,
 }
 tasks.postcss.path = {
   source: path.join(dir.source, tasks.postcss.srcDir),

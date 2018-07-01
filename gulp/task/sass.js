@@ -27,7 +27,7 @@ class Sass extends Registry {
           relative: config.tasks.sass.genDir,
           basePath: path.join(config.dir.build, config.env, config.path),
         }),
-        autoprefixer(config.tasks.sass.autoprefixer),
+        autoprefixer(),
       ]
       if (config.env === 'production') {
         processors.push(cssnano({

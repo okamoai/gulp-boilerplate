@@ -26,9 +26,7 @@ class Postcss extends Registry {
         pimport({
           prefix: '_',
         }),
-        cssnext({
-          browsers: config.tasks.postcss.autoprefixer.browsers,
-        }),
+        cssnext(),
         assets({
           basePath: path.join(config.dir.build, config.env, config.path),
           cachebuster: true,

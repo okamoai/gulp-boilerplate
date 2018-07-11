@@ -65,7 +65,14 @@ class Js extends Registry {
           .pipe(rename({
             dirname: path.dirname(entry),
           }))
-          .pipe(gulpIf(config.env === 'production', uglify({ preserveComments: 'some' })))
+          .pipe(gulpIf(
+            config.env === 'production',
+            uglify({
+              output: {
+                comments: /^!/,
+              },
+            })
+          ))
           .pipe(gulp.dest(config.tasks.js.path.build))
           .pipe(debug({ title: 'js:file' }))
       })

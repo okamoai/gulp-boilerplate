@@ -1,16 +1,14 @@
 /**
  * Gulp Task: js
- * Compress JavaScript files into one file with Browserify
+ * Compress JavaScript files into one file with Webpack
  */
 import Registry from 'undertaker-registry'
 import gulpIf from 'gulp-if'
 import uglify from 'gulp-uglify'
 import debug from 'gulp-debug'
 import rename from 'gulp-rename'
-import browserify from 'browserify'
-import babelify from 'babelify'
-import source from 'vinyl-source-stream'
-import buffer from 'vinyl-buffer'
+import webpack from 'webpack'
+import webpackStream from 'webpack-stream'
 import path from 'path'
 import glob from 'glob'
 import config from '../config'
@@ -35,7 +33,6 @@ class Js extends Registry {
       jsFiles.forEach(filePath => {
         taskExecuted[filePath] = false
         const normalizeFilePath = path.normalize(filePath)
-        const file = path.parse(normalizeFilePath)
         const entry = normalizeFilePath
           .split(path.sep)
           .filter((dir, idx) => {
@@ -44,26 +41,33 @@ class Js extends Registry {
           })
           .join(path.sep)
 
-        const browserifyObject = browserify({
-          basedir: config.tasks.js.path.source,
-          entries: entry,
-          debug: config.env === 'development',
-        })
-        if (config.tasks.js.babel) {
-          browserifyObject.transform(babelify)
-        }
-        browserifyObject
-          .bundle()
+        gulp
+          .src(filePath, { base: config.tasks.js.path.source })
           .on('end', () => onEnd(filePath))
           .on('error', function Error(err) {
             process.stdout.write(`Error : ${err.message}`)
             this.emit('end')
             callback()
           })
-          .pipe(source(file.base))
-          .pipe(buffer())
+          .pipe(webpackStream(
+            {
+              mode: config.env === 'stage' ? 'development' : config.env,
+              devtool: config.env !== 'production' ? 'inline-source-map' : false,
+              module: {
+                rules: [
+                  {
+                    test: /\.js?$/,
+                    exclude: /node_modules/,
+                    loader: 'babel-loader',
+                  },
+                ],
+              },
+            },
+            webpack
+          ))
           .pipe(rename({
             dirname: path.dirname(entry),
+            basename: path.basename(entry, '.js'),
           }))
           .pipe(gulpIf(
             config.env === 'production',

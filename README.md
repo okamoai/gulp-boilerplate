@@ -162,15 +162,15 @@ npm run js:dev  # 開発環境用
 npm run js:stg  # テスト環境用
 npm run js:prd  # 本番環境用
 ```
-JavaScript を [Browserfy](http://browserify.org/) で連結して出力します。
+JavaScript を [Webpack](https://webpack.js.org/) で連結して出力します。
 
 - `_`（アンダースコア）から始まるディレクトリやファイルはエントリーポイント（ファイル出力）の対象外になります。
 - npm package のライブラリは直接 `import` で読み込めますが、個別に記述した JavaScript はファイル名の先頭にアンダースコアをつけてローカルに置き、`import` で読み込んで使用します。
 
 環境オプションで上記共通処理以外に以下の挙動の変化があります。
 
-- `dev` オプションで SourceMap が出力されます。（Browserfy の debug オプション）
-- `stg`, `prd` オプションで JavaScript が圧縮されて出力されます。（[gulp-uglify](https://github.com/terinjokes/gulp-uglify) を使用）
+- `dev` オプションで SourceMap が出力されます。
+- `stg`, `prd` オプションで JavaScript が圧縮されて出力されます。
 
 #### タスク: `jsConcat`
 ```sh

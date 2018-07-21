@@ -1,5 +1,5 @@
 {
   "domain": "https://test.example.co.jp",
   "cdn": "https://test-cdn.example.co.jp",
-  "path": "/path"
+  "path": "/path/"
 }

@@ -133,6 +133,7 @@
     "prettier-eslint-cli": "^4.7.1",
     "replacestream": "^4.0.2",
     "through2": "^2.0.1",
+    "vinyl-buffer": "^1.0.1",
     "webpack": "^4.16.0",
     "webpack-stream": "^4.0.3"
   },

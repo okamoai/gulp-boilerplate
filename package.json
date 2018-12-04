@@ -66,8 +66,8 @@
   "author": "okamoai <okamoai@rano-raraku.net>",
   "license": "MIT",
   "engines": {
-    "node": "~8.9.4",
-    "npm": "~4.0.5"
+    "node": "~10.14.1",
+    "npm": "~6.4.1"
   },
   "browserslist": [
     "ie 11",

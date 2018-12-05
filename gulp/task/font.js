@@ -28,7 +28,9 @@ class Font extends Registry {
       }
       // Get a information of web font resource
       const fonts = {}
-      const fontFilePath = glob.sync(path.join(config.tasks.font.path.source, config.tasks.font.target))
+      const fontFilePath = glob.sync(
+        path.join(config.tasks.font.path.source, config.tasks.font.target)
+      )
       fontFilePath.forEach(filePath => {
         const normalizeFilePath = path.normalize(filePath)
         const file = path.parse(normalizeFilePath)
@@ -58,10 +60,12 @@ class Font extends Registry {
         })
         .on('end', () => onEnd('base'))
         .pipe(consolidate('lodash', { className: config.tasks.font.className }))
-        .pipe(rename({
-          prefix: '_',
-          basename: 'base',
-        }))
+        .pipe(
+          rename({
+            prefix: '_',
+            basename: 'base',
+          })
+        )
         .pipe(gulp.dest(config.tasks.font.path.css))
         .pipe(debug({ title: `font:${config.defaultTasks.css}-base` }))
 
@@ -79,34 +83,40 @@ class Font extends Registry {
         gulp
           .src(fontFiles, { base: config.tasks.font.path.source })
           .on('end', () => onEnd(`font:${key}`))
-          .pipe(gulpIf(
-            config.env === 'development',
-            imagemin([
-              imagemin.svgo({
-                plugins: [
-                  { removeRasterImages: true },
-                  { cleanupListOfValues: true },
-                  { sortAttrs: true },
-                  { removeUselessStrokeAndFill: true },
-                  { convertPathData: false },
-                  { removeTitle: true },
-                  { removeDesc: true },
-                ],
-              }),
-            ])
-          ))
-          .pipe(iconfont({
-            fontName,
-            prependUnicode: true,
-            startUnicode: 0xf000,
-            formats: ['woff2', 'woff', 'ttf'],
-            normalize: true,
-            fontHeight: 1000,
-            timestamp: 0,
-          }))
+          .pipe(
+            gulpIf(
+              config.env === 'development',
+              imagemin([
+                imagemin.svgo({
+                  plugins: [
+                    { removeRasterImages: true },
+                    { cleanupListOfValues: true },
+                    { sortAttrs: true },
+                    { removeUselessStrokeAndFill: true },
+                    { convertPathData: false },
+                    { removeTitle: true },
+                    { removeDesc: true },
+                  ],
+                }),
+              ])
+            )
+          )
+          .pipe(
+            iconfont({
+              fontName,
+              prependUnicode: true,
+              startUnicode: 0xf000,
+              formats: ['woff2', 'woff', 'ttf'],
+              normalize: true,
+              fontHeight: 1000,
+              timestamp: 0,
+            })
+          )
           .on('glyphs', glyphs => {
             // for CRC Hash
-            const fontsData = fontFiles.reduce((concat, filePath) => concat + fs.readFileSync(filePath))
+            const fontsData = fontFiles.reduce(
+              (concat, filePath) => concat + fs.readFileSync(filePath)
+            )
             const cssfontPath = path.join(config.tasks.font.genDir, fontPath)
             // CSS Template Option
             const consolidateOption = {
@@ -133,10 +143,12 @@ class Font extends Registry {
               })
               .on('end', () => onEnd(`css:${key}`))
               .pipe(consolidate('lodash', consolidateOption))
-              .pipe(rename({
-                prefix: '_',
-                basename: fontName,
-              }))
+              .pipe(
+                rename({
+                  prefix: '_',
+                  basename: fontName,
+                })
+              )
               .pipe(gulp.dest(path.join(config.tasks.font.path.css, cssExtendPath)))
               .pipe(debug({ title: `font:${config.defaultTasks.css}-extend` }))
             // Generate sample files

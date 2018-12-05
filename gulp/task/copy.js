@@ -18,24 +18,27 @@ class Copy extends Registry {
         })
         .on('end', callback)
         // Replace the character string set in config.js
-        .pipe(through.obj(function Tansform(file, encoding, throughCallback) {
-          const isTarget = config.tasks.copy.replace.target.some(ext =>
-            file.path.match(new RegExp(`${ext}$`)))
-          const replace = file
-          if (!file.isNull() && isTarget) {
-            config.tasks.copy.replace.regex.forEach(regex => {
-              if (file.isStream()) {
-                replace.contents = file.contents.pipe(replacestream(regex.pattern, regex.replacement))
-              }
-              if (file.isBuffer()) {
-                const str = String(file.contents).replace(regex.pattern, regex.replacement)
-                replace.contents = Buffer.from(str)
-              }
-            })
-          }
-          this.push(replace)
-          return throughCallback()
-        }))
+        .pipe(
+          through.obj(function Tansform(file, encoding, throughCallback) {
+            const isTarget = config.tasks.copy.replace.target.some(ext => file.path.match(new RegExp(`${ext}$`)))
+            const replace = file
+            if (!file.isNull() && isTarget) {
+              config.tasks.copy.replace.regex.forEach(regex => {
+                if (file.isStream()) {
+                  replace.contents = file.contents.pipe(
+                    replacestream(regex.pattern, regex.replacement)
+                  )
+                }
+                if (file.isBuffer()) {
+                  const str = String(file.contents).replace(regex.pattern, regex.replacement)
+                  replace.contents = Buffer.from(str)
+                }
+              })
+            }
+            this.push(replace)
+            return throughCallback()
+          })
+        )
         .pipe(gulp.dest(config.tasks.copy.path.build))
         .pipe(debug({ title: 'copy:file' }))
     })

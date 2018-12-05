@@ -66,20 +66,24 @@ class JsConcat extends Registry {
         gulp
           .src(concatFiles, { base: config.tasks.jsConcat.path.source })
           .pipe(gulpIf(config.env === 'development', sourcemaps.init()))
-          .pipe(plumber({
-            errorHandler: notify.onError('<%= error.message %>'),
-          }))
+          .pipe(
+            plumber({
+              errorHandler: notify.onError('<%= error.message %>'),
+            })
+          )
           .on('end', () => onEnd(outputFile))
           .pipe(concat(outputFileName))
           .pipe(rename({ dirname: outputDir }))
-          .pipe(gulpIf(
-            config.env === 'production',
-            uglify({
-              output: {
-                comments: /^!/,
-              },
-            })
-          ))
+          .pipe(
+            gulpIf(
+              config.env === 'production',
+              uglify({
+                output: {
+                  comments: /^!/,
+                },
+              })
+            )
+          )
           .pipe(gulpIf(config.env === 'development', sourcemaps.write()))
           .pipe(gulp.dest(config.tasks.jsConcat.path.build))
           .pipe(debug({ title: 'jsConcat:file' }))

@@ -22,36 +22,42 @@ class Ejs extends Registry {
           base: config.tasks.ejs.path.source,
         })
         .on('end', callback)
-        .pipe(plumber({
-          errorHandler: notify.onError('<%= error.message %>'),
-        }))
+        .pipe(
+          plumber({
+            errorHandler: notify.onError('<%= error.message %>'),
+          })
+        )
         // Skip outputting directories and files with underscores
         .pipe(filter(file => !/[/\\]_/.test(file.path) || !/^_/.test(file.relative)))
-        .pipe(ejs(
-          {
-            env: {
-              mode: config.env,
-              domain: config.domain,
-              cdn: config.cdn,
-              path: config.path,
+        .pipe(
+          ejs(
+            {
+              env: {
+                mode: config.env,
+                domain: config.domain,
+                cdn: config.cdn,
+                path: config.path,
+              },
             },
-          },
-          {
-            root: config.tasks.ejs.path.source,
-          },
-          {
-            ext: '.html',
-          }
-        ))
+            {
+              root: config.tasks.ejs.path.source,
+            },
+            {
+              ext: '.html',
+            }
+          )
+        )
         // Rename if file name has extension specification
-        .pipe(rename(filePath => {
-          const replacePath = filePath
-          if (filePath.basename.match(/(.+?)(\..+?)$/)) {
-            replacePath.basename = RegExp.$1
-            replacePath.extname = RegExp.$2
-          }
-          return replacePath
-        }))
+        .pipe(
+          rename(filePath => {
+            const replacePath = filePath
+            if (filePath.basename.match(/(.+?)(\..+?)$/)) {
+              replacePath.basename = RegExp.$1
+              replacePath.extname = RegExp.$2
+            }
+            return replacePath
+          })
+        )
         .pipe(gulpIf(config.tasks.ejs.prettify, prettify(config.tasks.ejs.prettify)))
         .pipe(gulp.dest(config.tasks.ejs.path.build))
         .pipe(debug({ title: 'ejs:file' }))

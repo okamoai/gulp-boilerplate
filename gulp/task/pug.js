@@ -22,49 +22,57 @@ class Pug extends Registry {
           base: config.tasks.pug.path.source,
         })
         .on('end', callback)
-        .pipe(plumber({
-          errorHandler: notify.onError('<%= error.message %>'),
-        }))
+        .pipe(
+          plumber({
+            errorHandler: notify.onError('<%= error.message %>'),
+          })
+        )
         // Skip outputting directories and files with underscores
         .pipe(filter(file => !/[/\\]_/.test(file.path) || !/^_/.test(file.relative)))
         // Refer to the JSON file described in the pug file
-        .pipe(data(file => {
-          const json = {}
-          const pugData = {}
-          String(file.contents)
-            .split('\n')
-            .forEach(line => {
-              if (line.match(/^\/\/-\s*?data\s+?(.+?)$/)) {
-                const dataFileName = RegExp.$1
-                const dataFile = fs.readFileSync(
-                  path.join(process.cwd(), config.tasks.pug.path.source, dataFileName),
-                  'utf8'
-                )
-                Object.assign(json, JSON.parse(dataFile))
-              }
-            })
-          pugData[config.tasks.pug.dataName] = json
-          pugData.env = {
-            mode: config.env,
-            domain: config.domain,
-            cdn: config.cdn,
-            path: config.path,
-          }
-          return pugData
-        }))
-        .pipe(pug({
-          basedir: config.tasks.pug.path.source,
-          pretty: config.tasks.pug.pretty,
-        }))
+        .pipe(
+          data(file => {
+            const json = {}
+            const pugData = {}
+            String(file.contents)
+              .split('\n')
+              .forEach(line => {
+                if (line.match(/^\/\/-\s*?data\s+?(.+?)$/)) {
+                  const dataFileName = RegExp.$1
+                  const dataFile = fs.readFileSync(
+                    path.join(process.cwd(), config.tasks.pug.path.source, dataFileName),
+                    'utf8'
+                  )
+                  Object.assign(json, JSON.parse(dataFile))
+                }
+              })
+            pugData[config.tasks.pug.dataName] = json
+            pugData.env = {
+              mode: config.env,
+              domain: config.domain,
+              cdn: config.cdn,
+              path: config.path,
+            }
+            return pugData
+          })
+        )
+        .pipe(
+          pug({
+            basedir: config.tasks.pug.path.source,
+            pretty: config.tasks.pug.pretty,
+          })
+        )
         // Rename if file name has extension specification
-        .pipe(rename(filePath => {
-          const replacePath = filePath
-          if (filePath.basename.match(/(.+?)(\..+?)$/)) {
-            replacePath.basename = RegExp.$1
-            replacePath.extname = RegExp.$2
-          }
-          return replacePath
-        }))
+        .pipe(
+          rename(filePath => {
+            const replacePath = filePath
+            if (filePath.basename.match(/(.+?)(\..+?)$/)) {
+              replacePath.basename = RegExp.$1
+              replacePath.extname = RegExp.$2
+            }
+            return replacePath
+          })
+        )
         .pipe(gulp.dest(config.tasks.pug.path.build))
         .pipe(debug({ title: 'pug:file' }))
     })

@@ -30,21 +30,25 @@ class Sass extends Registry {
         autoprefixer(),
       ]
       if (config.env === 'production') {
-        processors.push(cssnano({
-          minifyFontValues: {
-            removeQuotes: false,
-          },
-          zindex: false,
-        }))
+        processors.push(
+          cssnano({
+            minifyFontValues: {
+              removeQuotes: false,
+            },
+            zindex: false,
+          })
+        )
       }
       gulp
         .src(path.join(config.tasks.sass.path.source, config.tasks.sass.target), {
           base: config.tasks.sass.path.source,
         })
         .on('end', callback)
-        .pipe(plumber({
-          errorHandler: notify.onError('<%= error.message %>'),
-        }))
+        .pipe(
+          plumber({
+            errorHandler: notify.onError('<%= error.message %>'),
+          })
+        )
         .pipe(gulpIf(config.env === 'development', sourcemaps.init()))
         // Skip outputting directories and files with underscores
         .pipe(filter(file => !/[/\\]_/.test(file.path) || !/^_/.test(file.relative)))

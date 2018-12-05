@@ -19,25 +19,29 @@ class Imagemin extends Registry {
           base: config.tasks.imagemin.path.source,
         })
         .on('end', callback)
-        .pipe(plumber({
-          errorHandler: notify.onError('<%= error.message %>'),
-        }))
-        .pipe(imagemin([
-          imagemin.gifsicle(),
-          imagemin.jpegtran(),
-          pngquant({ speed: 1 }),
-          imagemin.svgo({
-            plugins: [
-              { removeRasterImages: true },
-              { cleanupListOfValues: true },
-              { sortAttrs: true },
-              { removeUselessStrokeAndFill: true },
-              { convertPathData: false },
-              { removeTitle: true },
-              { removeDesc: true },
-            ],
-          }),
-        ]))
+        .pipe(
+          plumber({
+            errorHandler: notify.onError('<%= error.message %>'),
+          })
+        )
+        .pipe(
+          imagemin([
+            imagemin.gifsicle(),
+            imagemin.jpegtran(),
+            pngquant({ speed: 1 }),
+            imagemin.svgo({
+              plugins: [
+                { removeRasterImages: true },
+                { cleanupListOfValues: true },
+                { sortAttrs: true },
+                { removeUselessStrokeAndFill: true },
+                { convertPathData: false },
+                { removeTitle: true },
+                { removeDesc: true },
+              ],
+            }),
+          ])
+        )
         .pipe(gulp.dest(config.tasks.imagemin.path.build))
         .pipe(debug({ title: 'imagemin:file' }))
     })

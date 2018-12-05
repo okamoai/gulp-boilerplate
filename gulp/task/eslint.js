@@ -13,14 +13,18 @@ class Eslint extends Registry {
   init(gulp) {
     gulp.task('eslint', callback => {
       gulp
-        .src(path.join(
-          config.tasks[config.defaultTasks.js].path.source,
-          config.tasks[config.defaultTasks.js].target
-        ))
+        .src(
+          path.join(
+            config.tasks[config.defaultTasks.js].path.source,
+            config.tasks[config.defaultTasks.js].target
+          )
+        )
         .on('end', callback)
-        .pipe(plumber({
-          errorHandler: notify.onError('<%= error.message %>'),
-        }))
+        .pipe(
+          plumber({
+            errorHandler: notify.onError('<%= error.message %>'),
+          })
+        )
         .pipe(eslint())
         .pipe(eslint.format())
         .pipe(eslint.failOnError())

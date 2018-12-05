@@ -34,21 +34,25 @@ class Postcss extends Registry {
         cssMqpacker(),
       ]
       if (config.env === 'production') {
-        processors.push(cssnano({
-          minifyFontValues: {
-            removeQuotes: false,
-          },
-          zindex: false,
-        }))
+        processors.push(
+          cssnano({
+            minifyFontValues: {
+              removeQuotes: false,
+            },
+            zindex: false,
+          })
+        )
       }
       const gulpSrc = path.join(config.tasks.postcss.path.source, config.tasks.postcss.target)
       return (
         gulp
           .src(gulpSrc, { base: config.tasks.postcss.path.source })
           .pipe(gulpIf(config.env === 'development', sourcemaps.init()))
-          .pipe(plumber({
-            errorHandler: notify.onError('<%= error.message %>'),
-          }))
+          .pipe(
+            plumber({
+              errorHandler: notify.onError('<%= error.message %>'),
+            })
+          )
           // Skip outputting directories and files with underscores
           .pipe(filter(file => !/[/\\]_/.test(file.path) || !/_/.test(file.relative)))
           .pipe(postcss(processors))

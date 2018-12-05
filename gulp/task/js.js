@@ -17,7 +17,9 @@ class Js extends Registry {
   init(gulp) {
     gulp.task('js', callback => {
       const taskExecuted = {}
-      const jsFiles = glob.sync(path.join(config.tasks.js.path.source, '{!(_)*.js,**/!(_)*/!(_)*.js}'))
+      const jsFiles = glob.sync(
+        path.join(config.tasks.js.path.source, '{!(_)*.js,**/!(_)*/!(_)*.js}')
+      )
       if (!jsFiles.length) {
         callback()
       }
@@ -49,34 +51,40 @@ class Js extends Registry {
             this.emit('end')
             callback()
           })
-          .pipe(webpackStream(
-            {
-              mode: config.env === 'stage' ? 'development' : config.env,
-              devtool: config.env !== 'production' ? 'inline-source-map' : false,
-              module: {
-                rules: [
-                  {
-                    test: /\.js?$/,
-                    exclude: /node_modules/,
-                    loader: 'babel-loader',
-                  },
-                ],
+          .pipe(
+            webpackStream(
+              {
+                mode: config.env === 'stage' ? 'development' : config.env,
+                devtool: config.env !== 'production' ? 'inline-source-map' : false,
+                module: {
+                  rules: [
+                    {
+                      test: /\.js?$/,
+                      exclude: /node_modules/,
+                      loader: 'babel-loader',
+                    },
+                  ],
+                },
               },
-            },
-            webpack
-          ))
-          .pipe(rename({
-            dirname: path.dirname(entry),
-            basename: path.basename(entry, '.js'),
-          }))
-          .pipe(gulpIf(
-            config.env === 'production',
-            uglify({
-              output: {
-                comments: /^!/,
-              },
+              webpack
+            )
+          )
+          .pipe(
+            rename({
+              dirname: path.dirname(entry),
+              basename: path.basename(entry, '.js'),
             })
-          ))
+          )
+          .pipe(
+            gulpIf(
+              config.env === 'production',
+              uglify({
+                output: {
+                  comments: /^!/,
+                },
+              })
+            )
+          )
           .pipe(gulp.dest(config.tasks.js.path.build))
           .pipe(debug({ title: 'js:file' }))
       })

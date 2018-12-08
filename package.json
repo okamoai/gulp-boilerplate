@@ -1,6 +1,6 @@
 {
   "name": "gulp-boilerplate",
-  "version": "1.4.0",
+  "version": "2.0.0",
   "description": "Static web page boilerplate with gulp.js",
   "main": "gulpfile.babel.js",
   "scripts": {
@@ -69,6 +69,10 @@
   },
   "author": "okamoai <okamoai@rano-raraku.net>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/okamoai/gulp-boilerplate.git"
+  },
   "engines": {
     "node": "~10.14.1",
     "npm": "~6.4.1"

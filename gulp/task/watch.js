@@ -10,16 +10,18 @@ import config from '../config'
 class Watch extends Registry {
   init(gulp) {
     gulp.task('watch', () => {
-      const BROWSER_SYNC_RELOAD_DELAY = 800
-      let timer
-      config.isWatching = true
-
       // BrowserSync
       browserSync.init({
         ui: false,
+        files: path.join(config.dir.build, 'developmentt/**/*'),
+        watch: true,
         server: {
           baseDir: path.join(config.dir.build, 'development'),
         },
+        ghostMode: false,
+        notify: false,
+        reloadDebounce: 800,
+        reloadThrottle: 800,
       })
       // Watch HTML
       gulp.watch(
@@ -85,17 +87,6 @@ class Watch extends Registry {
       gulp.watch(
         path.join(config.tasks.copy.path.source, config.tasks.copy.target).replace(/\\/g, '/'),
         gulp.task('copy')
-      )
-      // Excecute Live Reload if files are changed
-      gulp.watch(
-        path.join(config.dir.build, 'developmen/**/*').replace(/\\/g, '/'),
-        { verbose: true },
-        file => {
-          clearTimeout(timer)
-          timer = setTimeout(() => {
-            browserSync.reload(file.relative)
-          }, BROWSER_SYNC_RELOAD_DELAY)
-        }
       )
     })
   }

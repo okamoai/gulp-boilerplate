@@ -195,7 +195,6 @@ tasks.jsConcat.path = {
 }
 
 export default {
-  isWatching: false,
   env,
   dir,
   domain: config.get('domain'),

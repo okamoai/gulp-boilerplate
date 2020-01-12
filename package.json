@@ -74,8 +74,8 @@
     "url": "https://github.com/okamoai/gulp-boilerplate.git"
   },
   "engines": {
-    "node": "~10.14.1",
-    "npm": "~6.4.1"
+    "node": "~12.14.1",
+    "npm": "~6.13.4"
   },
   "browserslist": [
     "ie 11",

@@ -11,7 +11,7 @@ import sass from 'gulp-sass'
 import postcss from 'gulp-postcss'
 import assets from 'postcss-assets'
 import cssMqpacker from 'css-mqpacker'
-import autoprefixer from 'autoprefixer'
+import presetenv from 'postcss-preset-env'
 import cssnano from 'cssnano'
 import sourcemaps from 'gulp-sourcemaps'
 import debug from 'gulp-debug'
@@ -27,7 +27,9 @@ class Sass extends Registry {
           relative: config.tasks.sass.genDir,
           basePath: path.join(config.dir.build, config.env, config.path),
         }),
-        autoprefixer(),
+        presetenv({
+          autoprefixer: { grid: true },
+        }),
       ]
       if (config.env === 'production') {
         processors.push(

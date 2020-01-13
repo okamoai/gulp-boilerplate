@@ -11,7 +11,7 @@ import postcss from 'gulp-postcss'
 import rename from 'gulp-rename'
 import debug from 'gulp-debug'
 import sourcemaps from 'gulp-sourcemaps'
-import cssnext from 'postcss-cssnext'
+import presetenv from 'postcss-preset-env'
 import pimport from 'postcss-partial-import'
 import assets from 'postcss-assets'
 import cssMqpacker from 'css-mqpacker'
@@ -26,12 +26,14 @@ class Postcss extends Registry {
         pimport({
           prefix: '_',
         }),
-        cssnext(),
         assets({
           basePath: path.join(config.dir.build, config.env, config.path),
           cachebuster: true,
         }),
         cssMqpacker(),
+        presetenv({
+          autoprefixer: { grid: true },
+        }),
       ]
       if (config.env === 'production') {
         processors.push(

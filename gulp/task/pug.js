@@ -25,7 +25,7 @@ class Pug extends Registry {
         .pipe(
           plumber({
             errorHandler: notify.onError('<%= error.message %>'),
-          })
+          }),
         )
         // Skip outputting directories and files with underscores
         .pipe(filter(file => !/[/\\]_/.test(file.path) || !/^_/.test(file.relative)))
@@ -41,7 +41,7 @@ class Pug extends Registry {
                   const dataFileName = RegExp.$1
                   const dataFile = fs.readFileSync(
                     path.join(process.cwd(), config.tasks.pug.path.source, dataFileName),
-                    'utf8'
+                    'utf8',
                   )
                   Object.assign(json, JSON.parse(dataFile))
                 }
@@ -54,13 +54,13 @@ class Pug extends Registry {
               path: config.path,
             }
             return pugData
-          })
+          }),
         )
         .pipe(
           pug({
             basedir: config.tasks.pug.path.source,
             pretty: config.tasks.pug.pretty,
-          })
+          }),
         )
         // Rename if file name has extension specification
         .pipe(
@@ -71,7 +71,7 @@ class Pug extends Registry {
               replacePath.extname = RegExp.$2
             }
             return replacePath
-          })
+          }),
         )
         .pipe(gulp.dest(config.tasks.pug.path.build))
         .pipe(debug({ title: 'pug:file' }))

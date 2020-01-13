@@ -18,8 +18,8 @@ class Build extends Registry {
         'eslint',
         config.defaultTasks.js,
         config.defaultTasks.html,
-        config.defaultTasks.css
-      )
+        config.defaultTasks.css,
+      ),
     )
   }
 }

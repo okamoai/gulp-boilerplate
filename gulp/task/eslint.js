@@ -16,14 +16,14 @@ class Eslint extends Registry {
         .src(
           path.join(
             config.tasks[config.defaultTasks.js].path.source,
-            config.tasks[config.defaultTasks.js].target
-          )
+            config.tasks[config.defaultTasks.js].target,
+          ),
         )
         .on('end', callback)
         .pipe(
           plumber({
             errorHandler: notify.onError('<%= error.message %>'),
-          })
+          }),
         )
         .pipe(eslint())
         .pipe(eslint.format())

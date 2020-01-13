@@ -22,7 +22,7 @@ class Imagemin extends Registry {
         .pipe(
           plumber({
             errorHandler: notify.onError('<%= error.message %>'),
-          })
+          }),
         )
         .pipe(
           imagemin([
@@ -40,7 +40,7 @@ class Imagemin extends Registry {
                 { removeDesc: true },
               ],
             }),
-          ])
+          ]),
         )
         .pipe(gulp.dest(config.tasks.imagemin.path.build))
         .pipe(debug({ title: 'imagemin:file' }))

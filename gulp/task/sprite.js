@@ -34,7 +34,7 @@ class Sprite extends Registry {
         path.join(config.tasks.sprite.path.source, config.tasks.sprite.target),
         {
           ignore: config.tasks.sprite.retina ? null : config.tasks.sprite.target2x,
-        }
+        },
       )
       pngFilePath.forEach(filePath => {
         const normalizeFilePath = path.normalize(filePath)
@@ -71,7 +71,7 @@ class Sprite extends Registry {
           rename({
             prefix: '_',
             basename: 'base',
-          })
+          }),
         )
         .pipe(gulp.dest(config.tasks.sprite.path.css))
         .pipe(debug({ title: `sprite:${config.defaultTasks.css}-base` }))
@@ -89,18 +89,18 @@ class Sprite extends Registry {
           .join(path.sep)
         const spriteRetinaPath = config.tasks.sprite.retina
           ? path.join(
-            config.tasks.sprite.path.source,
-            spritePath
-              .split(path.sep)
-              .map(dir => {
-                if (dir === spriteName) {
-                  return `_${spriteName}`
-                }
-                return dir
-              })
-              .join(path.sep),
-            config.tasks.sprite.target2x
-          )
+              config.tasks.sprite.path.source,
+              spritePath
+                .split(path.sep)
+                .map(dir => {
+                  if (dir === spriteName) {
+                    return `_${spriteName}`
+                  }
+                  return dir
+                })
+                .join(path.sep),
+              config.tasks.sprite.target2x,
+            )
           : null
 
         const spriteData = gulp
@@ -108,78 +108,74 @@ class Sprite extends Registry {
             base: config.tasks.sprite.path.source,
           })
           .pipe(
-            sprite(
-              Object.assign(
-                {
-                  imgName: `sprites_${spriteName}.png`,
-                  cssName: `${spriteName}.css`,
-                  padding: 4,
-                  cssTemplate: data => {
-                    // for CRC Hash
-                    const filesData = spriteFiles.reduce(
-                      (concat, fPath) => concat + fs.readFileSync(fPath)
-                    )
-                    const cssSpritePath = path.join(config.tasks.sprite.genDir, spritePath)
-                    // CSS Template Option
-                    const consolidateOption = {
-                      spriteName,
-                      data,
-                      spritePath: cssSpritePath.split(path.sep).join('/'),
-                      className: config.tasks.sprite.className,
-                      retina: config.tasks.sprite.retina,
-                      hash: crc.crc32(filesData),
-                    }
-                    // Generate CSS Extends
-                    const cssExtendPath = spritePath
-                      .split(path.sep)
-                      .filter(dir => dir !== spriteName)
-                      .join(path.sep)
-                    gulp
-                      .src(config.tasks.sprite.template[config.defaultTasks.css].sprite, {
-                        base: config.tasks.sprite.path.template,
-                      })
-                      .on('end', () => onEnd(`css:${key}`))
-                      .pipe(consolidate('lodash', consolidateOption))
-                      .pipe(
-                        rename({
-                          prefix: '_',
-                          basename: spriteName,
-                        })
-                      )
-                      .pipe(gulp.dest(path.join(config.tasks.sprite.path.css, cssExtendPath)))
-                      .pipe(debug({ title: `sprite:${config.defaultTasks.css}-extend` }))
-                    // Generate sample files
-                    if (config.env === 'development') {
-                      // CSS
-                      gulp
-                        .src(config.tasks.sprite.template.sample.css, {
-                          base: config.tasks.sprite.path.template,
-                        })
-                        .pipe(consolidate('lodash', consolidateOption))
-                        .pipe(rename({ basename: spriteName }))
-                        .pipe(gulp.dest(path.join(config.tasks.sprite.path.sample, spritePath)))
-                        .pipe(debug({ title: 'sprite:sampleCSS' }))
-                      // HTML
-                      gulp
-                        .src(config.tasks.sprite.template.sample.html, {
-                          base: config.tasks.sprite.path.template,
-                        })
-                        .pipe(consolidate('lodash', consolidateOption))
-                        .pipe(rename({ basename: spriteName }))
-                        .pipe(gulp.dest(path.join(config.tasks.sprite.path.sample, spritePath)))
-                        .pipe(debug({ title: 'sprite:sampleHTML' }))
-                    }
-                    return ''
-                  },
-                },
-                spriteRetinaPath
-                  ? {
+            sprite({
+              imgName: `sprites_${spriteName}.png`,
+              cssName: `${spriteName}.css`,
+              padding: 4,
+              cssTemplate: data => {
+                // for CRC Hash
+                const filesData = spriteFiles.reduce(
+                  (concat, fPath) => concat + fs.readFileSync(fPath),
+                )
+                const cssSpritePath = path.join(config.tasks.sprite.genDir, spritePath)
+                // CSS Template Option
+                const consolidateOption = {
+                  spriteName,
+                  data,
+                  spritePath: cssSpritePath.split(path.sep).join('/'),
+                  className: config.tasks.sprite.className,
+                  retina: config.tasks.sprite.retina,
+                  hash: crc.crc32(filesData),
+                }
+                // Generate CSS Extends
+                const cssExtendPath = spritePath
+                  .split(path.sep)
+                  .filter(dir => dir !== spriteName)
+                  .join(path.sep)
+                gulp
+                  .src(config.tasks.sprite.template[config.defaultTasks.css].sprite, {
+                    base: config.tasks.sprite.path.template,
+                  })
+                  .on('end', () => onEnd(`css:${key}`))
+                  .pipe(consolidate('lodash', consolidateOption))
+                  .pipe(
+                    rename({
+                      prefix: '_',
+                      basename: spriteName,
+                    }),
+                  )
+                  .pipe(gulp.dest(path.join(config.tasks.sprite.path.css, cssExtendPath)))
+                  .pipe(debug({ title: `sprite:${config.defaultTasks.css}-extend` }))
+                // Generate sample files
+                if (config.env === 'development') {
+                  // CSS
+                  gulp
+                    .src(config.tasks.sprite.template.sample.css, {
+                      base: config.tasks.sprite.path.template,
+                    })
+                    .pipe(consolidate('lodash', consolidateOption))
+                    .pipe(rename({ basename: spriteName }))
+                    .pipe(gulp.dest(path.join(config.tasks.sprite.path.sample, spritePath)))
+                    .pipe(debug({ title: 'sprite:sampleCSS' }))
+                  // HTML
+                  gulp
+                    .src(config.tasks.sprite.template.sample.html, {
+                      base: config.tasks.sprite.path.template,
+                    })
+                    .pipe(consolidate('lodash', consolidateOption))
+                    .pipe(rename({ basename: spriteName }))
+                    .pipe(gulp.dest(path.join(config.tasks.sprite.path.sample, spritePath)))
+                    .pipe(debug({ title: 'sprite:sampleHTML' }))
+                }
+                return ''
+              },
+              ...(spriteRetinaPath
+                ? {
                     retinaSrcFilter: spriteRetinaPath,
                     retinaImgName: spriteRetinaPath ? `sprites_${spriteName}@2x.png` : null,
                   }
-                  : {}
-              )
-            )
+                : {}),
+            }),
           )
 
         spriteData.img
@@ -192,8 +188,8 @@ class Sprite extends Registry {
           .pipe(
             gulpIf(
               config.env === 'development',
-              gulp.dest(path.join(config.tasks.sprite.path.sample))
-            )
+              gulp.dest(path.join(config.tasks.sprite.path.sample)),
+            ),
           )
       })
     })

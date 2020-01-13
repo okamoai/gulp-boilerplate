@@ -25,7 +25,7 @@ class Ejs extends Registry {
         .pipe(
           plumber({
             errorHandler: notify.onError('<%= error.message %>'),
-          })
+          }),
         )
         // Skip outputting directories and files with underscores
         .pipe(filter(file => !/[/\\]_/.test(file.path) || !/^_/.test(file.relative)))
@@ -44,8 +44,8 @@ class Ejs extends Registry {
             },
             {
               ext: '.html',
-            }
-          )
+            },
+          ),
         )
         // Rename if file name has extension specification
         .pipe(
@@ -56,7 +56,7 @@ class Ejs extends Registry {
               replacePath.extname = RegExp.$2
             }
             return replacePath
-          })
+          }),
         )
         .pipe(gulpIf(config.tasks.ejs.prettify, prettify(config.tasks.ejs.prettify)))
         .pipe(gulp.dest(config.tasks.ejs.path.build))

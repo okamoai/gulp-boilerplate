@@ -18,7 +18,7 @@ class Js extends Registry {
     gulp.task('js', callback => {
       const taskExecuted = {}
       const jsFiles = glob.sync(
-        path.join(config.tasks.js.path.source, '{!(_)*.js,**/!(_)*/!(_)*.js}')
+        path.join(config.tasks.js.path.source, '{!(_)*.js,**/!(_)*/!(_)*.js}'),
       )
       if (!jsFiles.length) {
         callback()
@@ -66,14 +66,14 @@ class Js extends Registry {
                   ],
                 },
               },
-              webpack
-            )
+              webpack,
+            ),
           )
           .pipe(
             rename({
               dirname: path.dirname(entry),
               basename: path.basename(entry, '.js'),
-            })
+            }),
           )
           .pipe(
             gulpIf(
@@ -82,8 +82,8 @@ class Js extends Registry {
                 output: {
                   comments: /^!/,
                 },
-              })
-            )
+              }),
+            ),
           )
           .pipe(gulp.dest(config.tasks.js.path.build))
           .pipe(debug({ title: 'js:file' }))

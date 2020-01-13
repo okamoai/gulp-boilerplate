@@ -20,13 +20,15 @@ class Copy extends Registry {
         // Replace the character string set in config.js
         .pipe(
           through.obj(function Tansform(file, encoding, throughCallback) {
-            const isTarget = config.tasks.copy.replace.target.some(ext => file.path.match(new RegExp(`${ext}$`)))
+            const isTarget = config.tasks.copy.replace.target.some(ext =>
+              file.path.match(new RegExp(`${ext}$`)),
+            )
             const replace = file
             if (!file.isNull() && isTarget) {
               config.tasks.copy.replace.regex.forEach(regex => {
                 if (file.isStream()) {
                   replace.contents = file.contents.pipe(
-                    replacestream(regex.pattern, regex.replacement)
+                    replacestream(regex.pattern, regex.replacement),
                   )
                 }
                 if (file.isBuffer()) {
@@ -37,7 +39,7 @@ class Copy extends Registry {
             }
             this.push(replace)
             return throughCallback()
-          })
+          }),
         )
         .pipe(gulp.dest(config.tasks.copy.path.build))
         .pipe(debug({ title: 'copy:file' }))

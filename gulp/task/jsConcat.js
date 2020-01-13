@@ -69,7 +69,7 @@ class JsConcat extends Registry {
           .pipe(
             plumber({
               errorHandler: notify.onError('<%= error.message %>'),
-            })
+            }),
           )
           .on('end', () => onEnd(outputFile))
           .pipe(concat(outputFileName))
@@ -81,8 +81,8 @@ class JsConcat extends Registry {
                 output: {
                   comments: /^!/,
                 },
-              })
-            )
+              }),
+            ),
           )
           .pipe(gulpIf(config.env === 'development', sourcemaps.write()))
           .pipe(gulp.dest(config.tasks.jsConcat.path.build))

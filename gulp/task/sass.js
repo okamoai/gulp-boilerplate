@@ -36,7 +36,7 @@ class Sass extends Registry {
               removeQuotes: false,
             },
             zindex: false,
-          })
+          }),
         )
       }
       gulp
@@ -47,7 +47,7 @@ class Sass extends Registry {
         .pipe(
           plumber({
             errorHandler: notify.onError('<%= error.message %>'),
-          })
+          }),
         )
         .pipe(gulpIf(config.env === 'development', sourcemaps.init()))
         // Skip outputting directories and files with underscores

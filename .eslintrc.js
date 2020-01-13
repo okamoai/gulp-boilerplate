@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['airbnb/base'],
+  extends: ['airbnb/base', 'prettier'],
   rules: {
     semi: ['error', 'never'],
     'max-len': ['error', { code: 120 }],

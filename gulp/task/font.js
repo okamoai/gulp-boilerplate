@@ -29,7 +29,7 @@ class Font extends Registry {
       // Get a information of web font resource
       const fonts = {}
       const fontFilePath = glob.sync(
-        path.join(config.tasks.font.path.source, config.tasks.font.target)
+        path.join(config.tasks.font.path.source, config.tasks.font.target),
       )
       fontFilePath.forEach(filePath => {
         const normalizeFilePath = path.normalize(filePath)
@@ -64,7 +64,7 @@ class Font extends Registry {
           rename({
             prefix: '_',
             basename: 'base',
-          })
+          }),
         )
         .pipe(gulp.dest(config.tasks.font.path.css))
         .pipe(debug({ title: `font:${config.defaultTasks.css}-base` }))
@@ -98,8 +98,8 @@ class Font extends Registry {
                     { removeDesc: true },
                   ],
                 }),
-              ])
-            )
+              ]),
+            ),
           )
           .pipe(
             iconfont({
@@ -110,12 +110,12 @@ class Font extends Registry {
               normalize: true,
               fontHeight: 1000,
               timestamp: 0,
-            })
+            }),
           )
           .on('glyphs', glyphs => {
             // for CRC Hash
             const fontsData = fontFiles.reduce(
-              (concat, filePath) => concat + fs.readFileSync(filePath)
+              (concat, filePath) => concat + fs.readFileSync(filePath),
             )
             const cssfontPath = path.join(config.tasks.font.genDir, fontPath)
             // CSS Template Option
@@ -147,7 +147,7 @@ class Font extends Registry {
                 rename({
                   prefix: '_',
                   basename: fontName,
-                })
+                }),
               )
               .pipe(gulp.dest(path.join(config.tasks.font.path.css, cssExtendPath)))
               .pipe(debug({ title: `font:${config.defaultTasks.css}-extend` }))

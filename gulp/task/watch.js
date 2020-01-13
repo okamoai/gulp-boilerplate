@@ -28,65 +28,65 @@ class Watch extends Registry {
         path
           .join(
             config.tasks[config.defaultTasks.html].path.source,
-            config.tasks[config.defaultTasks.html].target
+            config.tasks[config.defaultTasks.html].target,
           )
           .replace(/\\/g, '/'),
-        gulp.task(config.defaultTasks.html)
+        gulp.task(config.defaultTasks.html),
       )
       // Wath CSS
       gulp.watch(
         path
           .join(
             config.tasks[config.defaultTasks.css].path.source,
-            config.tasks[config.defaultTasks.css].target
+            config.tasks[config.defaultTasks.css].target,
           )
           .replace(/\\/g, '/'),
-        gulp.task(config.defaultTasks.css)
+        gulp.task(config.defaultTasks.css),
       )
       // Watch JavaScript
       gulp.watch(
         path
           .join(
             config.tasks[config.defaultTasks.js].path.source,
-            config.tasks[config.defaultTasks.js].target
+            config.tasks[config.defaultTasks.js].target,
           )
           .replace(/\\/g, '/'),
-        gulp.series('eslint', config.defaultTasks.js)
+        gulp.series('eslint', config.defaultTasks.js),
       )
       // Watch Web font
       gulp.watch(
         path
           .join(
             config.tasks[config.defaultTasks.font].path.source,
-            config.tasks[config.defaultTasks.font].target
+            config.tasks[config.defaultTasks.font].target,
           )
           .replace(/\\/g, '/'),
-        gulp.task(config.defaultTasks.font)
+        gulp.task(config.defaultTasks.font),
       )
       // Watch sprite images
       gulp.watch(
         path
           .join(
             config.tasks[config.defaultTasks.sprite].path.source,
-            config.tasks[config.defaultTasks.sprite].target
+            config.tasks[config.defaultTasks.sprite].target,
           )
           .replace(/\\/g, '/'),
-        gulp.task(config.defaultTasks.sprite)
+        gulp.task(config.defaultTasks.sprite),
       )
       // Watch images
       gulp.watch(
         path
           .join(
             config.tasks[config.defaultTasks.image].path.source,
-            config.tasks[config.defaultTasks.image].target
+            config.tasks[config.defaultTasks.image].target,
           )
           .replace(/\\/g, '/'),
-        gulp.task(config.defaultTasks.image)
+        gulp.task(config.defaultTasks.image),
       )
       // Watch Copy
       gulp.watch(
         path.join(config.tasks.copy.path.source, config.tasks.copy.target).replace(/\\/g, '/'),
-        gulp.task('copy')
+        gulp.task('copy'),
       )
     })
   }
